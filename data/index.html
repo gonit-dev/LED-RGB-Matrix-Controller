@@ -463,95 +463,97 @@
                 </div>
             </div>
 
-            <!-- Controls -->
-            <div class="grid-x grid-padding-x controls-section">
-                <div class="cell small-12 medium-6 large-3">
-                    <label for="rows">Jumlah Strip Horizontal:
-                        <input type="number" id="rows" value="3" min="1" max="20">
-                    </label>
-                </div>
-                <div class="cell small-12 medium-6 large-3">
-                    <label for="cols">Jumlah Strip Vertikal:
-                        <input type="number" id="cols" value="3" min="1" max="20">
-                    </label>
-                </div>
-                <div class="cell small-12 medium-6 large-3">
-                    <label for="ledsPerStrip">LED per Strip:
-                        <input type="number" id="ledsPerStrip" value="10" min="1" max="100">
-                    </label>
-                </div>
-                <div class="cell small-12 medium-6 large-3">
-                    <label for="startCorner">Titik Awal:
-                        <select id="startCorner">
-                            <option value="0">Kiri Bawah</option>
-                            <option value="1">Kanan Bawah</option>
-                            <option value="2">Kiri Atas</option>
-                            <option value="3">Kanan Atas</option>
-                        </select>
-                    </label>
-                </div>
-            </div>
-
-            <!-- Main Content -->
-            <div class="grid-x grid-padding-x main-content">
-                <!-- Preview -->
-                <div class="cell small-12 large-8">
-                    <div class="preview callout">
-                        <div class="grid-x align-justify">
-                            <div class="cell auto">
-                                <h2>📲 LED Matrix</h2>
-                            </div>
-                            <div class="cell shrink">
-                                <label>
-                                    <input type="checkbox" id="zigzag" checked>
-                                    Mode Zigzag
-                                </label>
-                            </div>
-                        </div>
-                        <div id="zigzagInfo"></div>
-                        <div class="led-grid-container">
-                            <div id="ledGrid" class="led-grid"></div>
-                        </div>
+            <div class="grid-container">
+                <!-- Controls -->
+                <div class="grid-x grid-padding-x controls-section">
+                    <div class="cell small-12 medium-6 large-3">
+                        <label for="rows">Jumlah Strip Horizontal:
+                            <input type="number" id="rows" value="3" min="1" max="20">
+                        </label>
+                    </div>
+                    <div class="cell small-12 medium-6 large-3">
+                        <label for="cols">Jumlah Strip Vertikal:
+                            <input type="number" id="cols" value="3" min="1" max="20">
+                        </label>
+                    </div>
+                    <div class="cell small-12 medium-6 large-3">
+                        <label for="ledsPerStrip">LED per Strip:
+                            <input type="number" id="ledsPerStrip" value="10" min="1" max="100">
+                        </label>
+                    </div>
+                    <div class="cell small-12 medium-6 large-3">
+                        <label for="startCorner">Titik Awal:
+                            <select id="startCorner">
+                                <option value="0">Kiri Bawah</option>
+                                <option value="1">Kanan Bawah</option>
+                                <option value="2">Kiri Atas</option>
+                                <option value="3">Kanan Atas</option>
+                            </select>
+                        </label>
                     </div>
                 </div>
 
-                <!-- Sidebar -->
-                <div class="cell small-12 large-4">
-                    <!-- Color Palette -->
-                    <div class="callout color-palette">
-                        <h3>🎨 Palet Warna</h3>
-                        <div class="palette-grid" id="colorPalette"></div>
-                        <div class="grid-x grid-padding-x custom-color">
-                            <div class="cell shrink">
-                                <input type="color" id="customColor" value="#ff0080">
+                <!-- Main Content -->
+                <div class="grid-x grid-padding-x main-content">
+                    <!-- Preview -->
+                    <div class="cell small-12 large-8">
+                        <div class="preview callout">
+                            <div class="grid-x align-justify">
+                                <div class="cell auto">
+                                    <h2>📲 LED Matrix</h2>
+                                </div>
+                                <div class="cell shrink">
+                                    <label>
+                                        <input type="checkbox" id="zigzag" checked>
+                                        Mode Zigzag
+                                    </label>
+                                </div>
                             </div>
-                            <div class="cell auto">
-                                <input type="text" id="hexInput" value="#ff0080" placeholder="#RRGGBB">
+                            <div id="zigzagInfo"></div>
+                            <div class="led-grid-container">
+                                <div id="ledGrid" class="led-grid"></div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Brightness Control -->
-                    <div class="callout">
-                        <h3>💡 Kecerahan</h3>
-                        <div class="brightness-control">
-                            <input type="range" id="brightness" min="10" max="255" value="50">
-                            <div class="brightness-value" id="brightnessValue">50</div>
+                    <!-- Sidebar -->
+                    <div class="cell small-12 large-4">
+                        <!-- Color Palette -->
+                        <div class="callout color-palette">
+                            <h3>🎨 Palet Warna</h3>
+                            <div class="palette-grid" id="colorPalette"></div>
+                            <div class="grid-x grid-padding-x custom-color">
+                                <div class="cell shrink">
+                                    <input type="color" id="customColor" value="#ff0080">
+                                </div>
+                                <div class="cell auto">
+                                    <input type="text" id="hexInput" value="#ff0080" placeholder="#RRGGBB">
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Selection Panel -->
-                    <div class="callout selection-panel">
-                        <h3>✨ LED Terpilih</h3>
-                        <div class="button-group">
-                            <button class="button primary" onclick="selectAll()">Pilih Semua</button>
-                            <button class="button alert" onclick="clearSelection()">Hapus Semua</button>
+                        <!-- Brightness Control -->
+                        <div class="callout">
+                            <h3>💡 Kecerahan</h3>
+                            <div class="brightness-control">
+                                <input type="range" id="brightness" min="10" max="255" value="50">
+                                <div class="brightness-value" id="brightnessValue">50</div>
+                            </div>
                         </div>
-                        <div class="callout info-box">
-                            <strong>Total Terpilih:</strong> <span id="selectedCount">0</span> LED<br>
-                            <strong>Total LED:</strong> <span id="totalLeds">0</span>
+
+                        <!-- Selection Panel -->
+                        <div class="callout selection-panel">
+                            <h3>✨ LED Terpilih</h3>
+                            <div class="button-group">
+                                <button class="button primary" onclick="selectAll()">Pilih Semua</button>
+                                <button class="button alert" onclick="clearSelection()">Hapus Semua</button>
+                            </div>
+                            <div class="callout info-box">
+                                <strong>Total Terpilih:</strong> <span id="selectedCount">0</span> LED<br>
+                                <strong>Total LED:</strong> <span id="totalLeds">0</span>
+                            </div>
+                            <div class="selected-list" id="selectedList"></div>
                         </div>
-                        <div class="selected-list" id="selectedList"></div>
                     </div>
                 </div>
             </div>

@@ -820,6 +820,7 @@
                 }
                 showStatus('Error: ' + error.message, 'error');
                 console.error('Load error:', error);
+                throw error;
             }
 
             if (btn) {

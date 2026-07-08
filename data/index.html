@@ -473,22 +473,22 @@
                 <div class="grid-x grid-padding-x controls-section">
                     <div class="cell small-12 medium-6 large-3">
                         <label for="rows">Jumlah Strip Horizontal:
-                            <input type="number" id="rows" value="3" min="1" max="20">
+                            <input type="number" id="rows" value="3" min="1" max="20" autocomplete="off">
                         </label>
                     </div>
                     <div class="cell small-12 medium-6 large-3">
                         <label for="cols">Jumlah Strip Vertikal:
-                            <input type="number" id="cols" value="3" min="1" max="20">
+                            <input type="number" id="cols" value="3" min="1" max="20" autocomplete="off">
                         </label>
                     </div>
                     <div class="cell small-12 medium-6 large-3">
                         <label for="ledsPerStrip">LED per Strip:
-                            <input type="number" id="ledsPerStrip" value="10" min="1" max="100">
+                            <input type="number" id="ledsPerStrip" value="10" min="1" max="100" autocomplete="off">
                         </label>
                     </div>
                     <div class="cell small-12 medium-6 large-3">
                         <label for="startCorner">Titik Awal:
-                            <select id="startCorner">
+                            <select id="startCorner" autocomplete="off">
                                 <option value="0">Kiri Bawah</option>
                                 <option value="1">Kanan Bawah</option>
                                 <option value="2">Kiri Atas</option>
@@ -509,7 +509,7 @@
                                 </div>
                                 <div class="cell shrink">
                                     <label>
-                                        <input type="checkbox" id="zigzag" checked>
+                                        <input type="checkbox" id="zigzag" checked autocomplete="off">
                                         Mode Zigzag
                                     </label>
                                 </div>
@@ -531,10 +531,10 @@
                             <div class="palette-grid" id="colorPalette"></div>
                             <div class="grid-x grid-padding-x custom-color">
                                 <div class="cell shrink">
-                                    <input type="color" id="customColor" value="#ff0080">
+                                    <input type="color" id="customColor" value="#ff0080" autocomplete="off">
                                 </div>
                                 <div class="cell auto">
-                                    <input type="text" id="hexInput" value="#ff0080" placeholder="#RRGGBB">
+                                    <input type="text" id="hexInput" value="#ff0080" placeholder="#RRGGBB" autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -543,7 +543,7 @@
                         <div class="callout">
                             <h3>💡 Kecerahan</h3>
                             <div class="brightness-control">
-                                <input type="range" id="brightness" min="10" max="255" value="50">
+                                <input type="range" id="brightness" min="10" max="255" value="50" autocomplete="off">
                                 <div class="brightness-value" id="brightnessValue">50</div>
                             </div>
                         </div>
@@ -780,14 +780,23 @@
                 state.zigzag = config.zigzag;
                 state.startCorner = config.startCorner;
 
-                // Update form inputs
-                document.getElementById('rows').value = config.rows;
-                document.getElementById('cols').value = config.cols;
-                document.getElementById('ledsPerStrip').value = config.ledsPerStrip;
-                document.getElementById('brightness').value = config.brightness;
-                document.getElementById('brightnessValue').textContent = config.brightness;
-                document.getElementById('zigzag').checked = config.zigzag;
-                document.getElementById('startCorner').value = config.startCorner;
+                const applyLoadedControls = () => {
+                    document.getElementById('rows').value = config.rows;
+                    document.getElementById('cols').value = config.cols;
+                    document.getElementById('ledsPerStrip').value = config.ledsPerStrip;
+                    document.getElementById('brightness').value = config.brightness;
+                    document.getElementById('brightnessValue').textContent = config.brightness;
+                    document.getElementById('zigzag').checked = config.zigzag;
+                    document.getElementById('startCorner').value = config.startCorner;
+                };
+
+                // Set langsung, lalu paksa ulang beberapa kali untuk mengalahkan
+                // restorasi nilai form bawaan browser saat F5/refresh yang bisa
+                // berjalan SETELAH script ini selesai.
+                applyLoadedControls();
+                setTimeout(applyLoadedControls, 50);
+                setTimeout(applyLoadedControls, 300);
+                setTimeout(applyLoadedControls, 800);
 
                 // Reconstruct selectedLeds from groups
                 state.selectedLeds = {};
@@ -848,6 +857,17 @@
             state.currentColor = color;
             document.getElementById('customColor').value = color;
             document.getElementById('hexInput').value = color;
+
+            // Paksa ulang beberapa kali agar tidak ditimpa balik oleh restorasi
+            // nilai form bawaan browser saat F5/refresh.
+            setTimeout(() => {
+                document.getElementById('customColor').value = color;
+                document.getElementById('hexInput').value = color;
+            }, 50);
+            setTimeout(() => {
+                document.getElementById('customColor').value = color;
+                document.getElementById('hexInput').value = color;
+            }, 300);
             
             document.querySelectorAll('.color-item').forEach(item => {
                 item.classList.remove('active');
@@ -1143,6 +1163,12 @@
         }
 
         // Panggil saat DOM ready
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                loadFromArduino();
+            }
+        });
+
         init();
     </script>
 </body>

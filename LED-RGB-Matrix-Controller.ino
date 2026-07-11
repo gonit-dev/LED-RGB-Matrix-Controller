@@ -29,6 +29,7 @@ const char* ap_password = "12345678";
 #define MAX_GROUPS 20
 #define MAX_LEDS_PER_COLOR 50
 #define BRIGHTNESS 50
+#define MAX_BRIGHTNESS 150
 
 CRGB leds[NUM_LEDS];
 ESP8266WebServer server(80);
@@ -68,7 +69,7 @@ void loadConfig() {
         config.rows = doc["rows"] | 1;
         config.cols = doc["cols"] | 1;
         config.ledsPerStrip = doc["ledsPerStrip"] | 2;
-        config.brightness = doc["brightness"] | BRIGHTNESS;
+        config.brightness = constrain((int)(doc["brightness"] | BRIGHTNESS), 0, MAX_BRIGHTNESS);
         config.zigzag = doc["zigzag"] | true;
         config.startCorner = doc["startCorner"] | 0;
         config.numLeds = doc["numLeds"] | 2;
@@ -235,7 +236,7 @@ void handleSave() {
       config.rows = doc["rows"];
       config.cols = doc["cols"];
       config.ledsPerStrip = doc["ledsPerStrip"];
-      config.brightness = doc["brightness"];
+      config.brightness = constrain((int)doc["brightness"], 0, MAX_BRIGHTNESS);
       config.zigzag = doc["zigzag"];
       config.startCorner = doc["startCorner"];
       config.numLeds = doc["numLeds"];

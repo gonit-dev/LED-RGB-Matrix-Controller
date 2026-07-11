@@ -543,8 +543,8 @@
                         <div class="callout">
                             <h3>💡 Kecerahan</h3>
                             <div class="brightness-control">
-                                <input type="range" id="brightness" min="10" max="255" value="50" autocomplete="off">
-                                <div class="brightness-value" id="brightnessValue">50</div>
+                                <input type="range" id="brightness" min="0" max="150" value="50" autocomplete="off">
+                                <div class="brightness-value" id="brightnessValue">33</div>
                             </div>
                         </div>
 
@@ -597,6 +597,12 @@
     <script>
         let savedState = null;
 
+        const MAX_BRIGHTNESS = 150;
+
+        function brightnessToPercent(raw) {
+            return Math.round((raw / MAX_BRIGHTNESS) * 100);
+        }
+
         const state = {
             rows: 3,
             cols: 3,
@@ -632,7 +638,7 @@
             document.getElementById('savedLedsPerStrip').textContent = config.ledsPerStrip;
             document.getElementById('savedStartCorner').textContent = startCornerNames[config.startCorner];
             document.getElementById('savedZigzag').textContent = config.zigzag ? 'Ya' : 'Tidak';
-            document.getElementById('savedBrightness').textContent = config.brightness;
+            document.getElementById('savedBrightness').textContent = brightnessToPercent(config.brightness);
             document.getElementById('savedTotalLeds').textContent = config.numLeds;
             
             // Hitung total LED terpilih dari groups
@@ -661,7 +667,7 @@
                     document.getElementById('cols').value = savedState.cols;
                     document.getElementById('ledsPerStrip').value = savedState.ledsPerStrip;
                     document.getElementById('brightness').value = savedState.brightness;
-                    document.getElementById('brightnessValue').textContent = savedState.brightness;
+                    document.getElementById('brightnessValue').textContent = brightnessToPercent(savedState.brightness);
                     document.getElementById('zigzag').checked = savedState.zigzag;
                     document.getElementById('startCorner').value = savedState.startCorner;
 
@@ -785,7 +791,7 @@
                     document.getElementById('cols').value = config.cols;
                     document.getElementById('ledsPerStrip').value = config.ledsPerStrip;
                     document.getElementById('brightness').value = config.brightness;
-                    document.getElementById('brightnessValue').textContent = config.brightness;
+                    document.getElementById('brightnessValue').textContent = brightnessToPercent(config.brightness);
                     document.getElementById('zigzag').checked = config.zigzag;
                     document.getElementById('startCorner').value = config.startCorner;
                 };
@@ -1131,7 +1137,7 @@
 
         document.getElementById('brightness').addEventListener('input', (e) => {
             state.brightness = parseInt(e.target.value);
-            document.getElementById('brightnessValue').textContent = e.target.value;
+            document.getElementById('brightnessValue').textContent = brightnessToPercent(parseInt(e.target.value));
         });
 
         document.getElementById('customColor').addEventListener('input', (e) => {
